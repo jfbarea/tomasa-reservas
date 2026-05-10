@@ -11,6 +11,19 @@ export interface BookingRuleError {
   message: string
 }
 
+function toLocalDateStr(d: Date): string {
+  // 'en-CA' locale formats as YYYY-MM-DD using local timezone
+  return d.toLocaleDateString('en-CA')
+}
+
+function parseDateUTC(str: string): number {
+  return Date.UTC(
+    parseInt(str.slice(0, 4), 10),
+    parseInt(str.slice(5, 7), 10) - 1,
+    parseInt(str.slice(8, 10), 10),
+  )
+}
+
 export function assertBookingRules(
   input: BookingRuleInput,
   settings: Settings,
@@ -21,23 +34,21 @@ export function assertBookingRules(
   const maxStay = settings.max_stay_days ?? 14
   const maxGuests = settings.max_guests ?? 4
 
-  const start = new Date(input.start_date)
-  const end = new Date(input.end_date)
-
-  if (start >= end) {
+  // YYYY-MM-DD strings are lexicographically comparable — avoids timezone parsing bugs
+  if (input.start_date >= input.end_date) {
     errors.push({ field: 'end_date', message: 'La fecha de salida debe ser posterior a la entrada' })
   }
 
-  const earliestStart = new Date(today)
-  earliestStart.setDate(earliestStart.getDate() + minNotice)
-  if (start < earliestStart) {
+  const earliest = new Date(today)
+  earliest.setDate(earliest.getDate() + minNotice)
+  if (input.start_date < toLocalDateStr(earliest)) {
     errors.push({
       field: 'start_date',
       message: `La reserva requiere al menos ${minNotice} días de antelación`,
     })
   }
 
-  const diffDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24))
+  const diffDays = (parseDateUTC(input.end_date) - parseDateUTC(input.start_date)) / 86_400_000
   if (diffDays > maxStay) {
     errors.push({
       field: 'end_date',
