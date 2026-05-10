@@ -98,7 +98,7 @@ export default function BookingForm({ selectedRange, onSuccess }: Props) {
         />
         {errors.guest_email && <p className="text-destructive text-xs mt-1">{errors.guest_email}</p>}
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
           <label className="block text-sm font-medium mb-1 text-muted-foreground">Llegada</label>
           <input
