@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 import { CreateBookingSchema } from '@/lib/validation/booking'
 import type { CreateBookingInput } from '@/lib/validation/booking'
 
@@ -98,30 +100,41 @@ export default function BookingForm({ selectedRange, onSuccess }: Props) {
         />
         {errors.guest_email && <p className="text-destructive text-xs mt-1">{errors.guest_email}</p>}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {selectedRange ? (
         <div>
-          <label className="block text-sm font-medium mb-1 text-muted-foreground">Llegada</label>
-          <input
-            name="start_date"
-            type="date"
-            value={form.start_date ?? ''}
-            onChange={handleChange}
-            className={inputClass}
-          />
-          {errors.start_date && <p className="text-destructive text-xs mt-1">{errors.start_date}</p>}
+          <label className="block text-sm font-medium mb-1 text-muted-foreground">Fechas</label>
+          <div className={inputClass + ' flex items-center text-foreground'}>
+            {format(selectedRange.from, "d MMM", { locale: es })}
+            <span className="mx-2 text-muted-foreground">→</span>
+            {format(selectedRange.to, "d MMM yyyy", { locale: es })}
+          </div>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1 text-muted-foreground">Salida</label>
-          <input
-            name="end_date"
-            type="date"
-            value={form.end_date ?? ''}
-            onChange={handleChange}
-            className={inputClass}
-          />
-          {errors.end_date && <p className="text-destructive text-xs mt-1">{errors.end_date}</p>}
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">Llegada</label>
+            <input
+              name="start_date"
+              type="date"
+              value={form.start_date ?? ''}
+              onChange={handleChange}
+              className={inputClass}
+            />
+            {errors.start_date && <p className="text-destructive text-xs mt-1">{errors.start_date}</p>}
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1 text-muted-foreground">Salida</label>
+            <input
+              name="end_date"
+              type="date"
+              value={form.end_date ?? ''}
+              onChange={handleChange}
+              className={inputClass}
+            />
+            {errors.end_date && <p className="text-destructive text-xs mt-1">{errors.end_date}</p>}
+          </div>
         </div>
-      </div>
+      )}
       <div>
         <label className="block text-sm font-medium mb-1 text-muted-foreground">Número de personas</label>
         <input
