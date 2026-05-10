@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: tomasa
+      POSTGRES_PASSWORD: tomasa
+      POSTGRES_DB: tomasa
+    command: ["postgres", "-c", "shared_preload_libraries=btree_gist"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tomasa"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - tomasa-db-data:/var/lib/postgresql/data
+
+volumes:
+  tomasa-db-data:

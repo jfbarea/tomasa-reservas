@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --version)",
+      "Bash(docker --version)",
+      "Bash(git --version)",
+      "Bash(npm i *)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm typecheck *)",
+      "Bash(pnpm lint *)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa pnpm db:up)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa pnpm db:migrate)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa psql postgres://tomasa:tomasa@localhost:5432/tomasa -tAc \"select extname from pg_extension where extname='btree_gist'\")",
+      "Bash(docker exec *)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test pnpm test:unit -- tests/db/schema.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test pnpm test:unit)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit -- tests/unit)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit -- tests/api/settings.test.ts tests/api/blocks.test.ts tests/api/access.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit -- tests/api/settings.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit -- tests/api/availability.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit -- tests/api/bookings.create.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm test:unit -- tests/api/admin.confirm.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= vitest run tests/api/admin.confirm.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm exec vitest run tests/api/admin.confirm.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm exec vitest run tests/api/access.test.ts tests/api/admin.confirm.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm exec vitest run tests/api/ tests/unit/ tests/db/)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test GOOGLE_REDIRECT_URI=http://localhost:3000/api/admin/google/callback GOOGLE_TOKENS_ENC_KEY=MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI= pnpm exec vitest run tests/api/bookings.create.test.ts tests/api/bookings.overlap.test.ts)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=test ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough GOOGLE_CLIENT_ID=test GOOGLE_CLIENT_SECRET=test pnpm exec vitest run tests/dom/)",
+      "Bash(pnpm add *)",
+      "Bash(DATABASE_URL=postgres://tomasa:tomasa@localhost:5432/tomasa NODE_ENV=production ADAPTERS=memory ACCESS_COOKIE_SECRET=test-access-cookie-secret-32-chars-long-enough BOOKING_TOKEN_SECRET=test-booking-token-secret-32-chars-long-enough pnpm build)",
+      "Bash(wait)",
+      "Bash(node -e \"require\\('js-yaml'\\).load\\(require\\('fs'\\).readFileSync\\('/home/fran/tomasa/.github/workflows/ci.yml','utf8'\\)\\)\")",
+      "Bash(git -C /home/fran/tomasa rev-parse HEAD)",
+      "Bash(npx tsx *)",
+      "Bash(git add *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(git commit *)"
+    ]
+  }
+}

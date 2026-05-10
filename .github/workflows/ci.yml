@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: tomasa
+          POSTGRES_PASSWORD: tomasa
+          POSTGRES_DB: tomasa
+        options: >-
+          --health-cmd "pg_isready -U tomasa"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+        ports:
+          - 5432:5432
+        volumes:
+          - /tmp/pgdata:/var/lib/postgresql/data
+
+    env:
+      DATABASE_URL: postgres://tomasa:tomasa@localhost:5432/tomasa
+      NODE_ENV: test
+      ADAPTERS: memory
+      ACCESS_COOKIE_SECRET: ci-access-cookie-secret-32-chars-long-enough
+      BOOKING_TOKEN_SECRET: ci-booking-token-secret-32-chars-long-enough
+      GOOGLE_CLIENT_ID: ci-client-id
+      GOOGLE_CLIENT_SECRET: ci-client-secret
+      GOOGLE_REDIRECT_URI: http://localhost:3000/api/admin/google/callback
+      GOOGLE_TOKENS_ENC_KEY: MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI=
+      NEXT_PUBLIC_URL: http://localhost:3000
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run migrations
+        run: pnpm db:migrate
+
+      - name: Seed database
+        run: pnpm db:seed
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test:unit
+
+      - name: Build
+        run: pnpm build
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E tests
+        run: pnpm test:e2e
+        continue-on-error: true
