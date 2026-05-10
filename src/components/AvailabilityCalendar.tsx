@@ -30,23 +30,28 @@ export default function AvailabilityCalendar() {
     .filter((d) => d.status === 'blocked')
     .map((d) => parseISO(d.date))
 
+  const hasRange = !!(range?.from && range?.to)
+
   return (
     <div className="max-w-5xl mx-auto">
-      <div className="flex gap-6 items-start">
-        <div className="flex-shrink-0 rounded-lg border border-border bg-card p-4">
-          <style>{`
-            .rdp { --rdp-accent-color: var(--ds-yellow); --rdp-background-color: rgba(255,255,255,0.1); color: var(--foreground); }
-            .rdp-caption_label { color: var(--foreground); font-weight: 600; }
-            .rdp-head_cell { color: var(--muted-foreground); font-weight: 500; }
-            .rdp-nav_button { color: var(--foreground); border-color: var(--border); }
-            .rdp-nav_button:hover:not([disabled]) { background-color: rgba(255,255,255,0.1); }
-            .rdp-day { color: var(--foreground); border-radius: 0.375rem; }
-            .rdp-day:hover:not(.rdp-day_outside):not(.rdp-day_disabled):not(.rdp-day_selected) { background-color: rgba(255,255,255,0.1); }
-            .rdp-day_selected, .rdp-day_range_start, .rdp-day_range_end { background-color: var(--ds-yellow) !important; color: var(--ds-black) !important; font-weight: 600; }
-            .rdp-day_range_middle { background-color: rgba(242,201,76,0.2) !important; color: var(--foreground) !important; border-radius: 0; }
-            .rdp-day_outside { color: var(--muted-foreground); opacity: 0.4; }
-            .rdp-day_disabled { color: var(--muted-foreground); opacity: 0.3; }
-          `}</style>
+      <style>{`
+        .rdp { --rdp-accent-color: var(--ds-yellow); --rdp-background-color: rgba(255,255,255,0.1); color: var(--foreground); }
+        .rdp-caption_label { color: var(--foreground); font-weight: 600; }
+        .rdp-head_cell { color: var(--muted-foreground); font-weight: 500; }
+        .rdp-nav_button { color: var(--foreground); border-color: var(--border); }
+        .rdp-nav_button:hover:not([disabled]) { background-color: rgba(255,255,255,0.1); }
+        .rdp-day { color: var(--foreground); border-radius: 0.375rem; }
+        .rdp-day:hover:not(.rdp-day_outside):not(.rdp-day_disabled):not(.rdp-day_selected) { background-color: rgba(255,255,255,0.1); }
+        .rdp-day_selected, .rdp-day_range_start, .rdp-day_range_end { background-color: var(--ds-yellow) !important; color: var(--ds-black) !important; font-weight: 600; }
+        .rdp-day_range_middle { background-color: rgba(242,201,76,0.2) !important; color: var(--foreground) !important; border-radius: 0; }
+        .rdp-day_outside { color: var(--muted-foreground); opacity: 0.4; }
+        .rdp-day_disabled { color: var(--muted-foreground); opacity: 0.3; }
+        @keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .sheet-animate { animation: sheet-up 0.25s ease-out; }
+      `}</style>
+
+      <div className="md:flex md:gap-6 md:items-start">
+        <div className="rounded-lg border border-border bg-card p-4 md:flex-shrink-0">
           <DayPicker
             mode="range"
             selected={range}
@@ -71,16 +76,46 @@ export default function AvailabilityCalendar() {
           </div>
         </div>
 
-        {range?.from && range?.to && (
-          <div className="flex-1 min-w-0 rounded-lg border border-border bg-card p-4 sticky top-6">
+        {/* Desktop: form a la derecha */}
+        {hasRange && (
+          <div className="hidden md:block flex-1 min-w-0 rounded-lg border border-border bg-card p-4 sticky top-6">
             <h2 className="font-semibold mb-4">Solicitar reserva</h2>
             <BookingForm
-              selectedRange={{ from: range.from, to: range.to }}
+              selectedRange={{ from: range!.from!, to: range!.to! }}
               onSuccess={() => setRange(undefined)}
             />
           </div>
         )}
       </div>
+
+      {/* Móvil: bottom sheet */}
+      {hasRange && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/50 md:hidden"
+            onClick={() => setRange(undefined)}
+          />
+          <div className="sheet-animate fixed inset-x-0 bottom-0 z-50 md:hidden rounded-t-2xl border-t border-border bg-card shadow-2xl max-h-[85vh] overflow-y-auto">
+            <div className="p-5">
+              <div className="w-10 h-1 bg-border rounded-full mx-auto mb-4" />
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-semibold">Solicitar reserva</h2>
+                <button
+                  onClick={() => setRange(undefined)}
+                  className="text-muted-foreground hover:text-foreground leading-none"
+                  aria-label="Cerrar"
+                >
+                  ✕
+                </button>
+              </div>
+              <BookingForm
+                selectedRange={{ from: range!.from!, to: range!.to! }}
+                onSuccess={() => setRange(undefined)}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
