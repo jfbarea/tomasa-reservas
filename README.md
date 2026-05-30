@@ -1,4 +1,4 @@
-# tomasa
+# tomasa-reservas
 
 App personal para gestionar visitas de amigos a la nueva casa en Granada.
 
@@ -16,7 +16,7 @@ Implementación inicial completa. 76 tests verdes, build sin errores.
 
 ```bash
 git clone <repo>
-cd tomasa
+cd tomasa-reservas
 cp .env.example .env
 pnpm install
 pnpm db:up

@@ -1,4 +1,4 @@
-# PLAN.md — Ejecución autónoma de `tomasa`
+# PLAN.md — Ejecución autónoma de `tomasa-reservas`
 
 > Este plan está pensado para que un **agente** (Claude Code) lo ejecute de
 > principio a fin **sin intervención del usuario**. El usuario lo lanza,
@@ -123,7 +123,7 @@ git --version
 
 ### 1.1 Inicialización
 
-- `pnpm init` con `"name": "tomasa"`, `"private": true`, `"type": "module"`.
+- `pnpm init` con `"name": "tomasa-reservas"`, `"private": true`, `"type": "module"`.
 - Añadir `engines: { "node": ">=20", "pnpm": ">=9" }`.
 - `.nvmrc` → `20`.
 - `.gitignore` (Next.js + node_modules + .env* + coverage + .next + .agent/).
@@ -513,7 +513,7 @@ workflow.
 Estructura mínima (el agente la genera con datos reales del repo):
 
 ```markdown
-# tomasa
+# tomasa-reservas
 
 App personal para gestionar visitas de amigos a la nueva casa en Granada.
 
@@ -532,7 +532,7 @@ en BLOCKERS.md si lo hay]
 ## Quickstart (sin servicios externos)
 
 git clone …
-cd tomasa
+cd tomasa-reservas
 cp .env.example .env
 pnpm install
 pnpm db:up

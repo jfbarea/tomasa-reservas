@@ -1,4 +1,4 @@
-# SPEC.md — `tomasa`
+# SPEC.md — `tomasa-reservas`
 
 > App personal para gestionar visitas de amigos a la nueva casa en Granada.
 > Reservas con sincronización a Google Calendar de Fran y Elisa, y bloqueo de
